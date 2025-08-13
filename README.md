@@ -10,9 +10,9 @@ You are free to use, modify, and redistribute the code for learning, practice, o
 ---
 
 ## Repository Structure
-<contest_number><A/B/C/D/E/F...>.py
-<contest_number><A/B/C/D/E/F...>.py
-<contest_number><A/B/C/D/E/F...>.py
- and so on...
+<contest_number><A/B/C/D/E/F...>.py  
+<contest_number><A/B/C/D/E/F...>.py  
+<contest_number><A/B/C/D/E/F...>.py  
+ and so on...  
 
  to run a python file, download the file and after opening command prompt in that folder type "python3 <program_name>.py" without quotations.
