@@ -1,13 +1,18 @@
-t = int(input())
-for i in range(t):
-    b = True
-    n = int(input())
-    s = sorted(list(map(int, input().split())))
+for i in range(int(input())):
+    a,b,n = list(map(int, input().split()))
+    w = sorted(list(map(int, input().split())))
 
-    for i in range(n):
-        if sum(s[:i+1])%2 == sum(s[1+i:])%2:
-            print('YES')
-            b  = False
-            break
+    time = b-1
+    b = 1
+    while b > 0:
+        
+        if w != []:
+            b = min(b+w[0], a)
+            w.remove(w[0])
 
-    if b: print('NO') 
+        if b > 1:
+            time += b-1
+            b = 1
+        else: b = 0
+
+    print(time+1)

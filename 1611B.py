@@ -1,0 +1,5 @@
+from math import factorial as fac
+for i in range(int(input())):
+    a,b = list(map(int, input().split()))
+
+    print(min(a,b,(a+b)//4))
