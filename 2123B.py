@@ -1,7 +1,6 @@
-import bisect
 for i in range(int(input())):
     n,j,k = list(map(int, input().split()))
-    l = list(map(int, input().split()))
-    if (n-k)%2 == 0 or j == max(l) or k == n:
-        print('YES')
+    a = list(map(int, input().split()))
+
+    if (k == 1 and a[j-1] == max(a)) or k != 1: print('YES')
     else: print('NO')
