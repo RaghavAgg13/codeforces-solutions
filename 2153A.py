@@ -1,5 +1,5 @@
 for i in range(int(input())):
-    n,k = list(map(int, input().split()))
+    n = int(input())
     a = list(map(int, input().split()))
 
-    
+    print(len(set(a)))
