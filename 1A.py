@@ -1,3 +1,2 @@
-import math, sys
-n,m,a = list(map(int, input().split(" ")))
-print((math.ceil(n/a)) * (math.ceil(m/a)))
+n,m,a = list(map(int, input().split()))
+print((n//a+bool(n%a))*(m//a+bool(m%a)))
