@@ -4,35 +4,30 @@ for _ in range(int(input())):
     a.sort(reverse=True)
 
     l,r = 0, n
-    ans = []
     while (l < r):
         cnt = (l+r+1)//2
         mex = cnt-1
         # print("checking", cnt)
 
-        arr = [1 for i in range(n)]
         freq = {}
-        for i,x in enumerate(a):
-            if freq.get(x) == None:
-                freq[x] = []
-            freq[x].append(i)
+        for x in a:
+            freq[x] = freq.get(x, 0) + 1
             
         for x in a:
-            while len(freq.get(mex, [])) > 0:
-                arr[freq[mex].pop()] = mex+1
+            # print('checking mex:', mex, ", against x:", x, freq)
+            while freq.get(mex, 0) > 0:
+                freq[mex] -= 1
                 mex -= 1
-            if len(freq.get(x, [])) > 0 and mex <= (x-1)//2:
-                arr[freq[x].pop()] = x-mex
+            if freq[x] > 0 and mex <= (x-1)//2:
+                freq[x] -= 1
                 mex -= 1
 
             if mex < 0: break
         
         if mex < 0: 
             l = cnt
-            ans = arr.copy()
         else:
             r = cnt-1
             # print('failed cnt=', cnt)
     
     print(l)
-    print(*ans)

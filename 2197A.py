@@ -6,7 +6,7 @@ for _ in range(int(input())):
         s += int(i)
 
     cnt = 0
-    for j in range(1, 163f):
+    for j in range(1, 163):
         y = n+j
         if (y >= 0):
             dy = 0
