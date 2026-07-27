@@ -1,55 +1,56 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <array>
 #include <queue>
 #define ll long long
 using namespace std;
 
 int n,m,k,a,b,c;
-vector<vector<pair<int, ll>>> adj;
-vector<vector<ll>> dist;
+vector<vector<pair<int, int>>> adj;
+vector<ll> dist;
 
 int main(void) {
     ios::sync_with_stdio(0);
     cin.tie(NULL);
 
     cin >> n >> m >> k;
-    adj.assign(n+1, vector<pair<int, ll>>());
-    dist.assign(n+1, vector<ll>(k+1, 1e18));
+    adj.assign(n+1, vector<pair<int, int>>());
+    dist.assign((n+1)*(k+1), 1e18);
 
-    while (m--) {``
+    while (m--) {
         cin >> a >> b >> c;
 
         adj[a].emplace_back(b,c);
         adj[b].emplace_back(a,c);
     }
     
-    // dist, node, flights
-    priority_queue<array<ll, 3>, vector<array<ll, 3>>, greater<array<ll, 3>>> pq;
-    pq.push({0, 1, 0});
-    dist[1][0] = 0;
+    // dist, node*(k+1) + flight
+    priority_queue<pair<ll, int>, vector<pair<ll, int>>, greater<pair<ll, int>>> pq;
+    pq.push({0, 1*(k+1)+0});
+    dist[k+1] = 0;
 
     while (!pq.empty()) {
-        auto arr = pq.top(); pq.pop();
-        auto d = arr[0], node = arr[1], flight = arr[2];
+        auto [d, state] = pq.top(); pq.pop();
+        int node = state/(k+1), flight = state%(k+1);
 
-        if (d > dist[node][flight]) continue;
+        if (d > dist[state]) continue;
 
-        for (auto [x,d_] : adj[node]) {
-            if (d+d_ >= dist[x][flight]) continue;
-            dist[x][flight] = d+d_;
+        for (auto [x, d_] : adj[node]) {
+            int next_state = x*(k+1)+flight;
+            if (d+d_ >= dist[next_state]) continue;
+            dist[next_state] = d+d_;
 
-            pq.push({d+d_, x, flight});
+            pq.push({d+d_, next_state});
         }
 
         if (flight < k) {
             for (int x = 1; x <= n; x++) {
                 ll f = 1LL*(node-x)*(node-x);
-                if (d+f >= dist[x][flight+1]) continue;
+                int next_state = x*(k+1)+flight+1;
+                if (d+f >= dist[next_state]) continue;
 
-                dist[x][flight+1] = d+f;
-                pq.push({d+f, x, flight+1});
+                dist[next_state] = d+f;
+                pq.push({d+f, next_state});
             }
         }
     }
@@ -57,7 +58,7 @@ int main(void) {
     for (int i = 1; i <= n; i++) {
         ll ans = 1e18;
         for (int j = 0; j <= k; j++)
-            ans = min(ans, dist[i][j]);
+            ans = min(ans, dist[i*(k+1)+j]);
         cout << ans << ' ';
     }
     
